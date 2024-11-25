@@ -1,9 +1,8 @@
 package com.example.citymanagement.service.impl;
 
-import com.example.citymanagement.exception.EntityException;
+import com.example.citymanagement.exception.EntityExceptionEnum;
 import com.example.citymanagement.exception.EntityNotFoundException;
 import com.example.citymanagement.model.Car;
-import com.example.citymanagement.model.Person;
 import com.example.citymanagement.repository.CarRepository;
 import com.example.citymanagement.service.CarService;
 import lombok.AllArgsConstructor;
@@ -30,18 +29,18 @@ public class CarServiceImpl implements CarService {
 
     public Car getCarById(Long id) {
         return carRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(EntityException.CAR.getEntityException()));
+                .orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.CAR.getEntityException()));
     }
 
     public void deleteCarById(Long id) {
         carRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(EntityException.CAR.getEntityException()));
+                .orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.CAR.getEntityException()));
         carRepository.deleteById(id);
     }
 
     public Car updateCar(Long id, String model) {
         Car oldCar = carRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(EntityException.CAR.getEntityException()));
+                .orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.CAR.getEntityException()));
         oldCar.setModel(model);
         carRepository.save(oldCar);
         return oldCar;

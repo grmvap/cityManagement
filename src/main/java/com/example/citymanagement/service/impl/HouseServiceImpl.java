@@ -1,17 +1,14 @@
 package com.example.citymanagement.service.impl;
 
-import com.example.citymanagement.exception.EntityException;
+import com.example.citymanagement.exception.EntityExceptionEnum;
 import com.example.citymanagement.exception.EntityNotFoundException;
 import com.example.citymanagement.model.House;
 import com.example.citymanagement.repository.HouseRepository;
 import com.example.citymanagement.service.HouseService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service("HouseServiceImpl")
 @AllArgsConstructor
@@ -31,11 +28,11 @@ public class HouseServiceImpl implements HouseService {
 
     public House getHouseById(Long id) {
         return houseRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(EntityException.HOUSE.getEntityException()));
+                .orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.HOUSE.getEntityException()));
     }
 
     public void deleteHouseId(Long id) {
-        houseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(EntityException.HOUSE.getEntityException()));
+        houseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.HOUSE.getEntityException()));
         houseRepository.deleteById(id);
     }
 

@@ -18,3 +18,8 @@ databaseChangeLog:
                         type: varchar(200)
                         constraints:
                           nullable: false
+              - column:
+                  name: balance
+                  type: bigint
+                  constraints:
+                    nullable: false

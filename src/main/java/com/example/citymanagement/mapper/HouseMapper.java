@@ -1,9 +1,13 @@
 package com.example.citymanagement.mapper;
 
+import com.example.citymanagement.dto.CarResponseDto;
 import com.example.citymanagement.dto.HouseCreateDto;
 import com.example.citymanagement.dto.HouseResponseDto;
+import com.example.citymanagement.dto.PersonResponseDto;
 import com.example.citymanagement.model.House;
+import com.example.citymanagement.model.Person;
 import org.mapstruct.Mapper;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -16,5 +20,5 @@ public interface HouseMapper {
 
     HouseResponseDto mapToHouseResponse(House house);
 
-    List<HouseResponseDto> mapToHouseResponseList(List<House> houseList);
+
 }

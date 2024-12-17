@@ -1,5 +1,6 @@
 package com.example.citymanagement.service;
 
+import com.example.citymanagement.model.Car;
 import com.example.citymanagement.model.Person;
 import java.util.List;
 
@@ -13,5 +14,4 @@ public interface PersonService {
     Person updatePerson(Person person);
     Person getRandomPerson();
     Long personCount();
-
 }

@@ -1,0 +1,41 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="5" author="Artem">
+        <createTable tableName="person_house">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false"/>
+            </column>
+
+
+            <column name="person_id" type="bigint">
+                <constraints nullable="false"/>
+
+            </column>
+            <column name="house_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    
+     <addPrimaryKey tableName="person_house" columnNames="person_id, house_id"
+                  constraintName="pk_person_house"/>
+        <addForeignKeyConstraint baseTableName="person_house" baseColumnNames="person_id"
+                                 constraintName="fk_person_house_persons"
+                                 referencedTableName="person"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="person_house" baseColumnNames="house_id"
+                                 constraintName="fk_person_house_houses"
+                                 referencedTableName="house"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+
+
+
+    </changeSet>
+
+</databaseChangeLog>

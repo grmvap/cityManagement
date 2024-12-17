@@ -3,8 +3,7 @@ package com.example.citymanagement.service.impl;
 import com.example.citymanagement.aspect.RobinGood;
 import com.example.citymanagement.exception.EntityExceptionEnum;
 import com.example.citymanagement.exception.EntityNotFoundException;
-import com.example.citymanagement.model.Pasport;
-import com.example.citymanagement.model.Person;
+import com.example.citymanagement.model.*;
 import com.example.citymanagement.repository.PersonRepository;
 import com.example.citymanagement.service.PersonService;
 import com.example.citymanagement.service.PersonValidateService;
@@ -19,12 +18,10 @@ import java.util.Objects;
 
 @Service("PersonServiceImpl")
 @AllArgsConstructor
-@Primary
 public class PersonServiceImpl implements PersonService {
 
-
     private PersonRepository personRepository;
-    private PasportService pasportService;
+    private PassportService passportService;
     private PersonValidateService personValidateService;
 
     @Transactional
@@ -34,8 +31,9 @@ public class PersonServiceImpl implements PersonService {
         }
         personValidateService.validateNewPerson(person);
         Person savedPerson = personRepository.save(person);
-        Pasport newPasport = pasportService.createPasport(person);
-        savedPerson.setPasport(newPasport);
+        Passport newPassport = passportService.createPasport(person);
+        savedPerson.setPassport(newPassport);
+        savedPerson.setGender(autoGender(savedPerson.getSurname()));
 
         return savedPerson;
     }
@@ -51,13 +49,16 @@ public class PersonServiceImpl implements PersonService {
 
     @RobinGood
     public Person getRandomPerson() {
-        List<Person> personsList = personRepository.findAll();
-        return getPerson(personsList);
+        return getPerson(personRepository.findAll());
     }
 
+    @Transactional
     public void deletePersonId(Long id) {
-        personRepository.findById(id)
+        Person person = personRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.PERSON.getEntityException()));
+        for (House house : person.getHouses()) {
+            house.getPersons().remove(person);
+        }
         personRepository.deleteById(id);
     }
 
@@ -67,7 +68,6 @@ public class PersonServiceImpl implements PersonService {
         oldPerson.setName(name);
         personRepository.save(oldPerson);
         return oldPerson;
-
     }
 
     public Person updatePerson(Person person) {
@@ -93,4 +93,13 @@ public class PersonServiceImpl implements PersonService {
         return personsList.get(index);
     }
 
+    private String autoGender(String surname) {
+        if (surname.endsWith("ова") || surname.endsWith("ева") ||
+                surname.endsWith("ина") || surname.endsWith("ская") ||
+                surname.endsWith("цкая")){return GenderEnums.FEMALE.getGender();}
+        if (surname.endsWith("ов") || surname.endsWith("ев") ||
+                surname.endsWith("ин") || surname.endsWith("ский") ||
+                surname.endsWith("цкий")) {return GenderEnums.MALE.getGender();}
+        return GenderEnums.IT.getGender();
+    }
 }

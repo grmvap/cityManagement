@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -14,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = "House.findPersonByStreet",
+query = "SELECT c FROM House c WHERE c.street = :street")
 @Table(name = "house")
 public class House {
     @Id

@@ -1,6 +1,7 @@
 package com.example.citymanagement.service;
 
 import com.example.citymanagement.model.House;
+import com.example.citymanagement.model.Person;
 
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface HouseService {
      void deleteHouseId(Long id);
 
     House updateHouse(House house);
+
+    List<Person> getPersonsByStreet(String street);
+
+
 }

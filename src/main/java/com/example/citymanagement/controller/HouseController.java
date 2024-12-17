@@ -2,8 +2,11 @@ package com.example.citymanagement.controller;
 
 import com.example.citymanagement.dto.HouseCreateDto;
 import com.example.citymanagement.dto.HouseResponseDto;
+import com.example.citymanagement.dto.PersonResponseDto;
 import com.example.citymanagement.mapper.HouseMapper;
+import com.example.citymanagement.mapper.PersonMapper;
 import com.example.citymanagement.model.House;
+import com.example.citymanagement.model.Person;
 import com.example.citymanagement.service.HouseService;
 import com.example.citymanagement.service.impl.HouseServiceImpl;
 import com.example.citymanagement.service.PersonService;
@@ -19,14 +22,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/house")
 public class HouseController {
 
-    private PersonService personService;
+
+    private final PersonMapper personMapper;
     private HouseService houseService;
     private HouseMapper houseMapper;
 
-    public HouseController(PersonService personService, HouseService houseService, HouseMapper houseMapper) {
-        this.personService = personService;
+    public HouseController(HouseService houseService, HouseMapper houseMapper, PersonMapper personMapper) {
         this.houseService = houseService;
         this.houseMapper = houseMapper;
+        this.personMapper = personMapper;
     }
 
     @Operation(summary = "добавляем дом")
@@ -48,7 +52,7 @@ public class HouseController {
     @Operation(summary = "получаем дом по id")
     @GetMapping("/id/{id}")
     public HouseResponseDto getHouseById(@PathVariable Long id){
-        House house = houseService.getHouseById(id);
+        House house =houseService.getHouseById(id);
         return houseMapper.mapToHouseResponse(house);
     }
 
@@ -58,10 +62,11 @@ public class HouseController {
         houseService.deleteHouseId(id);
     }
 
-
-
-
-
+    @Operation(summary = "кто живет на улице (улица)?)")
+    @GetMapping("/person")
+    public List<PersonResponseDto> getPersonByStreet(@PathParam("street") String street){
+        List<Person> personList = houseService.getPersonsByStreet(street);
+    return personMapper.mapToPersonResponseList(personList);}
 
 }
 

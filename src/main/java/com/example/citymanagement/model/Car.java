@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedQuery(name = "Car.findCarsByPersonId",
+        query = "SELECT c FROM Car c WHERE c.person.id = :personId" )
 @Table(name = "car")
 public class Car {
     @Id

@@ -1,6 +1,6 @@
 package com.example.citymanagement.service.impl;
 
-import com.example.citymanagement.model.Pasport;
+import com.example.citymanagement.model.Passport;
 import com.example.citymanagement.model.Person;
 import com.example.citymanagement.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
@@ -20,22 +20,22 @@ class PersonServiceImplTest {
     @Mock
     private PersonRepository personRepository;
     @Mock
-    private PasportService pasportService;
+    private PassportService passportService;
 
     @Test
     void createPerson() {
         //given
         Person person = new Person();
         person.setName("Vasya");
-        Pasport pasport = new Pasport();
+        Passport passport = new Passport();
         Mockito.when(personRepository.save(person)).thenReturn(person);
-        Mockito.when(pasportService.createPasport(person)).thenReturn(pasport);
+        Mockito.when(passportService.createPasport(person)).thenReturn(passport);
         //when
         Person resultPerson = personServiceImpl.createPerson(person);
         //then
-        assertEquals(pasport,resultPerson.getPasport());
+        assertEquals(passport,resultPerson.getPassport());
         Mockito.verify(personRepository, Mockito.times(1)).save(person);
-        Mockito.verify(pasportService,Mockito.times(1)).createPasport(person);
+        Mockito.verify(passportService,Mockito.times(1)).createPasport(person);
 
 
 

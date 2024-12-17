@@ -18,11 +18,15 @@ public interface PersonMapper {
     Person mapToPerson(PersonCreateDto personCreateDto);
 
     @Mapping(target = "carResponseDtos", source = "person", qualifiedByName = "mapToCarResponseDto")
-    @Mapping(target = "pasportNumber", source = "pasport.number")
-    @Mapping(target = "pasportId", source = "pasport.id")
+    @Mapping(target = "passportNumber", source = "passport.number")
+    @Mapping(target = "passportId", source = "passport.id")
     PersonResponseDto mapToPersonResponse(Person person);
+
+
     @Named("mapToCarResponseDto")
     default List<CarResponseDto> mapToCarResponseDto(Person person){
         return CarMapper.INSTANSE.mapToCarResponseList(person.getCars());
     }
+
+    List<PersonResponseDto> mapToPersonResponseList(List<Person> persons);
 }

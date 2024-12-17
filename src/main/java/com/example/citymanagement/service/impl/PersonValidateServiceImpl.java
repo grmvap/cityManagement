@@ -15,7 +15,7 @@ public class PersonValidateServiceImpl implements PersonValidateService {
     }
     boolean isHaveDigits = person.getName().matches("/\\b[^\\d\\W]+\\b/g");
     if (isHaveDigits){
-        throw new PersonValidateException("Имя содердъжит только буквы");
+        throw new PersonValidateException("Имя содержит только буквы");
     }
 
 

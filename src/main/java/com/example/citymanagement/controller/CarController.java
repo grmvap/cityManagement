@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/car")
 public class CarController {
-    private PersonService personService;
 
+    private PersonService personService;
     private CarService carService;
     private CarMapper carMapper;
 
 
 
-    public CarController(@Qualifier("MokPersonServiceImpl") PersonService personService, CarService carService, CarMapper carMapper) {
+    public CarController(PersonService personService, CarService carService, CarMapper carMapper) {
         this.personService = personService;
         this.carService = carService;
         this.carMapper = carMapper;
@@ -60,16 +60,22 @@ public class CarController {
 
         return carMapper.mapToCarResponse(car);
     }
+    @Operation(summary = "получаем машины по id жителя")
+    @GetMapping("/getCars/{id}")
+    public List<CarResponseDto> getPersonsCarById(@PathVariable Long id) {
+        List<Car> carList = carService.getPersonsCarById(id);
+        return carMapper.mapToCarResponseList(carList);
+    }
 
     @Operation(summary = "удаляем машину по id")
-    @DeleteMapping("/delete")
-    public void deleteCarById(@PathParam("id") Long id) {
+    @DeleteMapping("/delete/{id}")
+    public void deleteCarById(@PathVariable Long id) {
         carService.deleteCarById(id);
     }
 
     @Operation(summary = "обновяем машину по id")
-    @PutMapping("/update")
-    public CarResponseDto updateCar(@PathParam("id") Long id, @PathParam("model") String model) {
+    @PutMapping("/update/{id}/{model}")
+    public CarResponseDto updateCar(@PathVariable Long id, @PathVariable String model) {
         Car car = carService.updateCar(id, model);
         return carMapper.mapToCarResponse(car);
     }

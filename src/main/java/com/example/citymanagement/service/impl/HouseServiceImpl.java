@@ -3,6 +3,7 @@ package com.example.citymanagement.service.impl;
 import com.example.citymanagement.exception.EntityExceptionEnum;
 import com.example.citymanagement.exception.EntityNotFoundException;
 import com.example.citymanagement.model.House;
+import com.example.citymanagement.model.Person;
 import com.example.citymanagement.repository.HouseRepository;
 import com.example.citymanagement.service.HouseService;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,9 @@ public class HouseServiceImpl implements HouseService {
     public House updateHouse(House house) {
         return houseRepository.save(house);
     }
+
+    public List<Person> getPersonsByStreet(String street) {return houseRepository.findPersonByStreet(street);}
+//todo сделать аппер ловер кейс, проверка на нал
 
 
 }

@@ -22,15 +22,16 @@ public class CarServiceImpl implements CarService {
         return carRepository.save(car);
     }
 
-    public List<Car> getCar() {
-        List<Car> carList = carRepository.findAll();
-        return carList;
-    }
+    public List<Car> getCar() {return carRepository.findAll();}
 
     public Car getCarById(Long id) {
         return carRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(EntityExceptionEnum.CAR.getEntityException()));
     }
+
+    public List<Car> getPersonsCarById(Long personId) {
+        return carRepository.findCarsByPersonId(personId);}
+
 
     public void deleteCarById(Long id) {
         carRepository.findById(id)

@@ -13,4 +13,5 @@ public interface CarService {
     Car updateCar(Long id, String model);
 
     Car updateCar(Car car);
+    List<Car> getPersonsCarById(Long personId);
 }
